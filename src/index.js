@@ -13,12 +13,16 @@ function general_fetch(url) {
 
 // Constant nodes from our HTML file
 const gameList = document.querySelector(".game-list")
-const gameDetail = document.querySelector(".game-details")
+let gameDetail = document.querySelector(".game-details")
 
 // -------------- #2 && #3 --------------
 // When the page loads, show the image, name, and high_score properties of the the first game in the array returned from your fetch.
 // When the user clicks on one of the games in the list, display all the details of that game.
 function editGameDetails(gameObject) {
+    // remove old event listeners
+    gameDetail.parentElement.replaceChild(gameDetail.cloneNode(true), gameDetail)
+    gameDetail = document.querySelector(".game-details");
+
     // set image source
     gameDetail.querySelector("#detail-image").setAttribute("src", gameObject["image"]);
     // set game title
@@ -37,9 +41,7 @@ function editGameDetails(gameObject) {
             let oldScore = gameObject["high_score"];
             if (parseInt(oldScore) < parseInt(scoreInput.value)) {
                 gameDetail.querySelector("#detail-high-score").textContent = scoreInput.value
-                console.log(gameObject["high_score"])
                 gameObject["high_score"] = parseInt(scoreInput.value);
-                console.log(gameObject["high_score"])
             }
         }
     });
